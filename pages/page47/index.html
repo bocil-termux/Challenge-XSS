@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page 47 - DEFACE Challenge</title>
+    <link rel="stylesheet" href="../../assets/css/global-style.css?v=1.0">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <canvas id="matrixCanvas"></canvas>
+
+    <div class="container">
+        <h1 class="glitch" data-text="DEFACE Challenge">DEFACE Challenge</h1>
+        <p>Try to inject an XSS payload below and see if you can deface this page.</p>
+
+        <div class="input-section">
+            <input type="text" id="userInput" placeholder="Input Here">
+            <button class="neon-btn" onclick="submitInput()">Submit</button>
+        </div>
+
+        <div class="hiddenSection" id="hiddenSection" style="display: none;">
+            <input type="text" id="commentName" placeholder="Input Here To Payload">
+            <button class="neon-btn" onclick="submitComment()">Submit</button>
+        </div>
+
+        <div class="output-section">
+            <div id="safeOutput"></div>
+        </div>
+
+        <div class="output-section">
+            <h2>EyeFox</h2>
+            <div id="commentOutput"></div>
+        </div>
+    </div>
+
+    <script src="../../assets/js/global-matrix.js?v=1.0"></script>
+    <script type="module" src="assets/js/bocil-termux.js?v=1.0"></script>
+    <script src="../../assets/js/eyefox.js"></script>
+    <script type="module" src="assets/js/script.js?v=1.0"></script>
+</body>
+</html>

